@@ -1,5 +1,5 @@
 import discord
-import asyncio
+import os
 from discord.ext import commands
 
 client = commands.Bot(command_prefix='!')
@@ -28,4 +28,5 @@ async def clear(ctx, amount : int):
     await ctx.channel.purge(limit=amount)
     await ctx.send(f'총{amount}개의 메시지를 삭제 했습니다.')
 
-client.run("NzUzMzAzOTcxMDE1Mjk1MTI3.X1kO_g.24ipDO64orTcKAIksvqQQrdkbOk")
+access_token = os.environ["BOT_TOKEN"]
+client.run("access_token")
