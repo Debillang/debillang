@@ -1,18 +1,15 @@
 import discord
-
 from discord.ext import commands
 
-client = commands.Bot(command_prefix='!')
+bot = commands.Bot(command_prefix='!')
 
-token = "NzUzMzAzOTcxMDE1Mjk1MTI3.X1kO_g.24ipDO64orTcKAIksvqQQrdkbOk"
-
-@client.event
+@bot.event
 async def on_ready():
-    print(client.user.id)
+    print(bot.user.id)
     print("ready")
     game = discord.Game("기승이 싫어")
-    await client.change_presence(status=discord.Status.online, activity=game)
-@client.event
+    await bot.change_presence(status=discord.Status.online, activity=game)
+@bot.event
 async def on_message(message):
     if message.content.startswith("안녕"):
         await message.channel.send("오냐")
@@ -23,10 +20,14 @@ async def on_message(message):
     if message.content.startswith("!사진"):
         pic = message.content.split(" ")[1]
         await message.channel.send(file=discord.File(pic))
-@client.command(name="정리", pass_context=True)
+
+    await bot.process_commands(message)
+@bot.command()
+async def ping(ctx):
+    await ctx.send('pong')
+@bot.command(name="정리", pass_context=True)
 async def clear(ctx, amount : int):
     await ctx.channel.purge(limit=amount)
     await ctx.send(f'총{amount}개의 메시지를 삭제 했습니다.')
 
-
-client.run("NzUzMzAzOTcxMDE1Mjk1MTI3.X1kO_g.24ipDO64orTcKAIksvqQQrdkbOk")
+bot.run("NzUzMzAzOTcxMDE1Mjk1MTI3.X1kO_g.24ipDO64orTcKAIksvqQQrdkbOk")
